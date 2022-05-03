@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.library.mapper.ReaderInfoMapper">
+
+    <!--public int insertReader(Read read);-->
+    <insert id="insertReader">
+        insert into reader_info value(#{readId}, #{sex}, #{birth}, #{address}, #{phone})
+    </insert>
+
+    <!--public ReaderInfo selectReaderByReadId(String readId);-->
+    <select id="selectReaderByReadId" resultType="com.library.bean.ReaderInfo">
+        select * from reader_info where read_id = #{readId}
+    </select>
+
+    <!--public int reverseReader(ReaderInfo readerInfo);-->
+    <update id="reverseReader">
+        update  reader_info set sex = #{sex}, birth = #{birth}, address = #{address},
+                                phone = #{phone} where read_id = #{readId}
+    </update>
+
+    <!--public List<LendInfo> allLends();-->
+    <select id="allLends" resultType="com.library.bean.LendInfo">
+        select * from lend_list
+    </select>
+
+    <!--public List<Read> selectAllReader();-->
+    <select id="selectAllReader" resultType="com.library.bean.Read">
+        select r.read_id, r.sex, r.birth, r.address, r.phone, a.password,
+               a.isBan from admin a, reader_info r where a.username = r.read_id
+    </select>
+</mapper>

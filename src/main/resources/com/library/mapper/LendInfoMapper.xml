@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.library.mapper.LendInfoMapper">
+
+    <!--public int lendBook(LendInfo lendInfo);-->
+    <insert id="lendBook">
+        insert into lend_list set book_id = #{bookId}, read_id = #{readId},
+                                  lend_date = #{lendDate}
+    </insert>
+
+    <!--public List<LendInfo> allLends(String readId);-->
+    <select id="allLends" resultType="com.library.bean.LendInfo">
+        select * from lend_list where read_id = #{readId}
+    </select>
+
+    <!--public int returnBook(LendInfo lendInfo);-->
+    <update id="returnBook">
+        update lend_list set back_date = #{backDate} where book_id = #{bookId} and read_id = #{readId}
+    </update>
+
+    <!--public List<LendLog> lendBookLog(String readId);-->
+    <select id="lendBookLog" resultType="com.library.bean.LendLog">
+        select b.book_id, b.name, b.author, l.lend_date, l.back_date, l.read_id from lend_list l, book_info b
+        where l.book_id = b.book_id and l.read_id = #{readId}
+    </select>
+    
+</mapper>

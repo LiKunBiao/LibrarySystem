@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.library.mapper.BookInfoMapper">
+    <!--public List<BookInfo> getAllBooks();-->
+    <select id="getAllBooks" resultType="com.library.bean.BookInfo">
+        select * from book_info
+    </select>
+
+    <!--public int insertBook(BookInfo bookInfo);-->
+    <insert id="insertBook">
+        insert into book_info value(null, #{name}, #{author}, #{publish}, #{isbn},
+            #{introduction}, #{language}, #{price}, #{pubDate}, #{classId}, #{number})
+    </insert>
+
+    <!--public int selectBookByID(long id);-->
+    <select id="selectBookByID" resultType="com.library.bean.BookInfo">
+        select * from book_info where book_id = #{id}
+    </select>
+
+    <!--public int updateBook(BookInfo bookInfo);-->
+    <update id="updateBook">
+        update book_info set name = #{name}, author = #{author}, publish = #{publish},
+                             ISBN = #{isbn}, introduction = #{introduction}, language = #{language},
+                             price = #{price}, pub_date = #{pubDate}, class_id = #{classId},
+                             number = #{number} where book_id = #{bookId}
+    </update>
+
+    <!--public int deleteBook(long id);-->
+    <delete id="deleteBook">
+        delete from book_info where book_id = #{id}
+    </delete>
+
+    <!--public List<BookInfo> selectBooks(@Param("name") String name, @Param("author") String author);-->
+    <select id="selectBooks" resultType="com.library.bean.BookInfo">
+        select * from book_info where 1 = 1
+        <if test="name != null and name !=''">
+            and name like "%"#{name}"%"
+        </if>
+        <if test="author != null and author !=''">
+            and author like "%"#{author}"%"
+        </if>
+    </select>
+
+    <!--public int sendBook(long id);-->
+    <update id="sendBook">
+        update book_info set number = number-1 where book_id = #{id}
+    </update>
+
+    <!--public int returnBook(long id);-->
+    <update id="returnBook">
+        update book_info set number = number+1 where book_id = #{id}
+    </update>
+</mapper>
